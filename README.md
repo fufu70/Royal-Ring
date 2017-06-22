@@ -80,5 +80,5 @@ $ gulp serve
 [example]: https://raw.githubusercontent.com/fufu70/Royal-Ring/master/common/example.png "Example"
 
 ## Authors
-* [Anthony Delaura]() - Designed the Ring.
-* [Christian Micklisch]() - CSS styling.
+* [Anthony Delaura](http://www.anthonydelaura.com/) - Designed the Ring.
+* [Christian Micklisch](https://github.com/fufu70) - CSS styling.
