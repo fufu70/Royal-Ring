@@ -1,0 +1,219 @@
+@import "breaker";
+@import "background-gradients";
+
+/**
+ * 
+ * Ring
+ * 
+ */
+
+$ring-counter-margin: 4px;
+
+/**
+ * Generates a pixel size from a given sequence:
+ *
+ *  Input:  80px 120px 160px 200px 240px ...
+ *  Diff:   16px 20px  24px  28px  32px  ...
+ *  Output: 56px 92px  128px 164px 200px
+ * 
+ * @param  $size: 80px The size of the ring.
+ */
+@function get-inner-size($size: 80px) {
+
+    $smallest-size: 80px;
+    $smallest-difference: 16px;
+    $difference: (($size - $smallest-size) / 10) + $smallest-difference;
+
+    @return $size - $difference;
+}
+
+/**
+ * Calculates the padding of the breaker.
+ * 
+ * @param  $size      The size of the ring.
+ * @param  $font-size The current font size of the contents.
+ */
+@function get-breaker-padding($size, $font-size) {
+    @return ($size / 3) - ($font-size / 1.2);
+}
+
+@mixin royal-ring(
+    $size: 80px, 
+    $background-start: #08feff, 
+    $background-stop: #0070dd, 
+    $circle-background-start: #066584,
+    $circle-background-mid: #0e7193,
+    $circle-background-stop: #056484,
+    $circle-percentage-stop: 100%,
+    $font-size: 24px,
+    $font-color: #fff,
+    $breaker-start-color: #066584,
+    $breaker-end-color: #0e7193
+) {
+    
+    @include ring(
+        $size,
+        $background-start,
+        $background-stop,
+        $circle-background-start,
+        $circle-background-mid,
+        $circle-background-stop,
+        $circle-percentage-stop
+    );
+
+    @include ring-contents(
+        get-inner-size($size),
+        $font-size,
+        $font-color
+    );
+
+    @include ring-breaker(
+        $breaker-start-color, 
+        $breaker-end-color,
+        get-inner-size($size) - 40px
+    );
+}
+
+
+/**
+ * It is assumed that 80px is the smallest size
+ * 
+ * @param  $size:                    80px          [description]
+ * @param  $background-start:        #08feff       [description]
+ * @param  $background-stop:         #0070dd       [description]
+ * @param  $circle-background-start: #066584       [description]
+ * @param  $circle-background-mid:   #0e7193       [description]
+ * @param  $circle-background-stop:  #056484       [description]
+ */
+@mixin ring(
+    $size: 80px, 
+    $background-start: #08feff, 
+    $background-stop: #0070dd, 
+    $circle-background-start: #066584,
+    $circle-background-mid: #0e7193,
+    $circle-background-stop: #056484,
+    $circle-percentage-stop: 100%
+) {
+
+    &__ring-start {
+        border-radius: 50%;
+        display: inline-block;
+
+        @include background-gradient-top-down($background-start, $background-stop);
+    }
+
+    &__ring-start-inner {
+        margin: $ring-counter-margin;
+        position: relative;
+    }
+
+    &__counter {
+        margin: $ring-counter-margin;
+        position: relative;
+
+        &__inner-ring,
+        &__outer-ring {
+            border-radius: 50%;
+
+            @include background-gradient-slanted($circle-background-start, $circle-background-mid, $circle-background-stop, 49%, $circle-percentage-stop);
+        }
+
+        &__outer-ring {
+            position: absolute;
+        }
+
+        &__inner-ring {
+            position: absolute;
+        }
+    }
+
+    @include ring-sizing($size);
+}
+
+/**
+ * The sizing of the ring.
+ * 
+ * @param  {[type]} $size [description]
+ */
+@mixin ring-sizing($size) {
+    $inner-size: get-inner-size($size);
+    $outer-ring-size: 90%;
+    $inner-ring-size: 96%;
+
+    &__ring-start-inner {
+        height: $inner-size - ($ring-counter-margin * 2);
+        width: $inner-size - ($ring-counter-margin * 2);
+    }
+
+    &__counter {
+
+        height: $size - ($ring-counter-margin * 2);
+        width: $size - ($ring-counter-margin * 2);
+
+        &__outer-ring {
+            height: $outer-ring-size;
+            right: #{(100 - $outer-ring-size) / 2};
+            top: #{(100 - $outer-ring-size) / 2};
+            width: $outer-ring-size;
+        }
+
+        &__inner-ring {
+            height: $inner-ring-size;
+            right: #{(100 - $inner-ring-size) / 2};
+            top: #{(100 - $inner-ring-size) / 2};
+            width: $inner-ring-size;
+        }
+    }
+}
+
+/**
+ * [contents description]
+ * @param  $size:       80px The current size of the ring.
+ * @param  $font-size:  24px          [description]
+ * @param  $font-color: #fff          [description]
+ */
+@mixin ring-contents(
+    $size: 80px, 
+    $font-size: 24px,
+    $font-color: #fff
+) {
+
+    $padding-top: get-breaker-padding($size, $font-size);
+    $breaker-padding-bottom: unset;
+    $breaker-padding-top: 3px;
+
+    &__ring-contents {
+        color: $font-color;
+        padding-top: $padding-top;
+
+        &__counter {
+            font-size: $font-size;
+            font-weight: 400;
+            line-height: 50px;
+        }
+
+        &__breaker {
+            padding-bottom: $breaker-padding-bottom;
+            padding-top: $breaker-padding-top;
+        }
+
+        &__description {
+            padding-top: 5px;
+            font-size: $font-size * 0.33;
+            font-weight: 300;
+            line-height: $font-size * 0.35;
+        }
+    }   
+}
+
+/**
+ * Adds the breaker into the ring-contents.
+ * 
+ * @param  $start-color [description]
+ * @param  $end-color   [description]
+ */
+@mixin ring-breaker($start-color, $end-color, $width) {
+    &__ring-contents {
+        @include breaker($start-color, $end-color, $width);
+    }   
+}

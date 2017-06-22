@@ -1,0 +1,135 @@
+/**
+ *
+ *
+ * Background Gradients
+ * 
+ * 
+ */
+
+/**
+ * Applies a background gradient from top to bottom of the element.
+ * 
+ * @param  $background-start: #08feff       The starting color.
+ * @param  $background-stop:  #0070dd       The ending color.
+ */
+@mixin background-gradient-top-down($background-start: #08feff, $background-stop: #0070dd) {
+	/* Old browsers */
+	background: $background-start;
+	/* FF3.6-15 */
+	background: -moz-linear-gradient(
+		top,
+		$background-start 0%,
+		$background-stop 100%
+	);
+	/* Chrome10-25,Safari5.1-6 */
+	background: -webkit-linear-gradient(
+		top,
+		$background-start 0%,
+		$background-stop 100%
+	);
+	/* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	background: linear-gradient(
+		to bottom,
+		$background-start 0%,
+		$background-stop 100%
+	);
+	/* IE6-9 */
+	filter: progid:DXImageTransform.Microsoft.gradient(
+		startColorstr='#{$background-start}',
+		endColorstr='#{$background-stop}',
+		GradientType=0
+	);
+}
+
+/**
+ * Applies a diagonal background gradient to the element.
+ * 
+ * @param  $background-start: #066584       The starting color
+ * @param  $background-mid:   #0e7193       The center color of transition.
+ * @param  $background-stop:  #056484       The ending color.
+ * @param  $mid-percentage:   49%           Where the background color swaps.
+ */
+@mixin background-gradient-slanted(
+	$background-start: #066584, 
+	$background-mid: #0e7193, 
+	$background-stop: #056484, 
+	$mid-percentage: 49%, 
+	$stop-percentage: 100%
+) {
+	/* Old browsers */
+	background: $background-start; 
+	/* FF3.6-15 */
+	background: -moz-linear-gradient(
+		-45deg,
+		$background-start 0%,
+		$background-start $mid-percentage,
+		$background-mid $mid-percentage + 1,
+		$background-stop $stop-percentage
+	);
+	/* Chrome10-25,Safari5.1-6 */
+	background: -webkit-linear-gradient(
+		-45deg,
+		$background-start 0%,
+		$background-start $mid-percentage,
+		$background-mid $mid-percentage + 1,
+		$background-stop $stop-percentage
+	);
+	/* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	background: linear-gradient(
+		135deg,
+		$background-start 0%,
+		$background-start $mid-percentage,
+		$background-mid $mid-percentage + 1,
+		$background-stop $stop-percentage
+	);
+	/* IE6-9 fallback on horizontal gradient */
+	filter: progid:DXImageTransform.Microsoft.gradient(
+		startColorstr='#{$background-start}',
+		endColorstr='#{$background-stop}',
+		GradientType=1
+	);
+}
+
+/**
+ * Applies a middle out background gradient to the element.
+ * 
+ * @param  $background-mid:  #0e7193       The center color in the element.
+ * @param  $background-stop: #056484       The ending color towards the outside of the element.
+ * @param  $mid-percentage:  0%            Where the background color starts from the center.
+ * @param  $stop-percentage: 100%          Where the gradient stop for the background color.
+ */
+@mixin background-gradient-middle-out(
+	$background-mid: #0e7193, 
+	$background-stop: #056484, 
+	$mid-percentage: 0%, 
+	$stop-percentage: 100%
+) {
+	/* Old browsers */
+	background: $background-mid;
+	/* FF3.6-15 */
+	background: -moz-radial-gradient(
+		center, 
+		ellipse cover, 
+		$background-mid $mid-percentage,  
+		$background-stop $stop-percentage
+	);
+	/* Chrome10-25,Safari5.1-6 */
+	background: -webkit-radial-gradient(
+		center, 
+		ellipse cover, 
+		$background-mid $mid-percentage, 
+		$background-stop $stop-percentage
+	); 
+	/* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	background: radial-gradient(
+		ellipse at center, 
+		$background-mid $mid-percentage, 
+		$background-stop $stop-percentage
+	); 
+	/* IE6-9 fallback on horizontal gradient */
+	filter: progid:DXImageTransform.Microsoft.gradient(
+		startColorstr='#{$background-mid}', 
+		endColorstr='#{$background-stop}',
+		GradientType=1
+	); 
+}

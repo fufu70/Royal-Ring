@@ -1,0 +1,78 @@
+@import "background-gradients";
+
+/**
+ * 
+ * Breaker
+ * 
+ */
+
+/**
+ * A horizontal breaker that displaces text, or seperates it.
+ * 
+ * @param  $starting-color: #04b7ee The top most color
+ * @param  $ending-color:   #0490bb The bottom most color.
+ * @param  $width:          80px    The total width of the breaker
+ * @param  $height:         10px    The total height of the breaker.
+ */
+@mixin breaker(
+	$starting-color: #04b7ee,
+	$ending-color: #0490bb,
+	$width: 80px,
+	$height: 10px
+) {
+	&__breaker {
+        height: $height;
+        margin: auto;
+        width: $width;
+
+        $breaker-border-color: $starting-color;
+        $triangle-size: $height;
+    	$background-start: rgba($ending-color, 0.01);
+    	$background-mid: rgba($ending-color, 1);
+    	$background-end: rgba($starting-color, 1);
+
+    	// $glow
+
+        &__line {
+            height: 6px;
+            border-bottom: 1px solid $breaker-border-color;
+        }
+
+        &__triangle {
+            background: -moz-linear-gradient(45deg, $background-start 0%, $background-start 49%, $background-mid 50%, $background-end 100%); /* FF3.6-15 */
+            background: -webkit-linear-gradient(45deg, $background-start 0%, $background-start 49%,$background-mid 50%,$background-end 100%); /* Chrome10-25,Safari5.1-6 */
+            background: linear-gradient(45deg, $background-start 0%, $background-start 49%,$background-mid 50%,$background-end 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#{$background-start}', endColorstr='#{$background-end}',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+
+            border: 1px solid $breaker-border-color;
+            border-width: 1px 1px 0 0;
+            transform: rotate(-45deg);
+            position: relative;
+            top: 0px;
+            width: $triangle-size + 1px;
+            height: $triangle-size + 1px;
+        }
+
+        &__glow-container {
+			height: 5px;
+			margin: auto;
+			overflow: hidden;
+			position: relative;
+			width: calc(100% - 5px);
+        }
+
+        &__glow {
+			height: 10px;
+			position:relative;
+			top: -5px;
+			width: 100%;
+
+            @include background-gradient-middle-out(
+                $background-mid,
+                $background-start,
+                0%,
+                72%
+            );
+        }
+    }
+}
