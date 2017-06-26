@@ -1,0 +1,33 @@
+/**
+ * 
+ * Functions
+ * 
+ * @author Christian Micklisch <christian.micklisch@successwithsos.com>
+ */
+
+/**
+ * Generates a pixel size from a given sequence:
+ *
+ *  Input:  80px 120px 160px 200px 240px ...
+ *  Diff:   16px 20px  24px  28px  32px  ...
+ *  Output: 56px 92px  128px 164px 200px
+ * 
+ * @param  $size: 80px The size of the ring.
+ */
+@function get-inner-size($size: $default-ring-size) {
+    $smallest-size: 80px;
+    $smallest-difference: 16px;
+    $difference: (($size - $smallest-size) / 10) + $smallest-difference;
+
+    @return $size - $difference;
+}
+
+/**
+ * Calculates the padding of the breaker.
+ * 
+ * @param  $size      The overall size of the ring.
+ * @param  $font-size The counter font size.
+ */
+@function get-breaker-padding($size, $font-size) {
+    @return ($size / 3) - ($font-size / 1.2);
+}

@@ -4,21 +4,22 @@
  * 
  * Breaker
  * 
+ * @author Christian Micklisch <christian.micklisch@successwithsos.com>
  */
 
 /**
  * A horizontal breaker that displaces text, or seperates it.
  * 
- * @param  $starting-color: #04b7ee The top most color
- * @param  $ending-color:   #0490bb The bottom most color.
- * @param  $width:          80px    The total width of the breaker
- * @param  $height:         10px    The total height of the breaker.
+ * @param  $start-color: $default-ring-breaker-start-color         The starting color of the breaker.
+ * @param  $end-color:   $default-ring-breaker-end-color           The ending color of the breaker, before becoming transparent.
+ * @param  $width:       get-inner-size($default-ring-size) - 40px The total width of the breaker.
+ * @param  $height:      $default-breaker-height                   The height of the breaker.
  */
 @mixin breaker(
-	$starting-color: #04b7ee,
-	$ending-color: #0490bb,
-	$width: 80px,
-	$height: 10px
+	$starting-color: $default-ring-breaker-start-color,
+	$ending-color: $default-ring-breaker-end-color,
+	$width: get-inner-size($default-ring-size) - 40px,
+	$height: $default-breaker-height
 ) {
 	&__breaker {
         height: $height;

@@ -30,17 +30,5 @@ body {
     letter-spacing: -1px;
   }
 
-  @include royal-ring(
-    160px,   /* size */
-    #ffff66, /* background-start */
-    #ffcc00, /* background-stop */
-    #7a0099, /* circle-background-start */
-    #9432ad, /* circle-background-mid */
-    #7a0099, /* circle-background-stop */
-    70%,     /* circle-percentage-stop */
-    42px,    /* font-size */
-    #ffffff, /* font-color */
-    #ffff66, /* breaker-start-color */
-    #ffcc00  /* breaker-end-color */
-  );
+  @include royal-ring();
 }

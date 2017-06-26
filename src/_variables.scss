@@ -1,0 +1,64 @@
+/**
+ *
+ * Variables
+ * 
+ * @author Christian Micklisch <christian.micklisch@successwithsos.com>
+ */
+
+/**
+ * The total size of the ring.
+ * @type {Pixel}
+ */
+$default-ring-size: 160px;
+
+/**
+ * The fontsize of the center value.
+ * @type {Pixel}
+ */
+$default-ring-font-size: 42px;
+
+/**
+ * Where the gradient of the circle stops.
+ * @type {Percentage}
+ */
+$default-ring-circle-percentage-stop: 70%;
+
+/**
+ * The margin of a ring.
+ * @type {Pixel}
+ */
+$ring-margin: 4px;
+
+
+/**
+ *
+ * 
+ * Ring Size Percentages
+ * 
+ * 
+ */
+$outer-ring-size: 90%;
+$inner-ring-size: 96%;
+
+/**
+ * The default height of the breaker in the center of the royal ring.
+ * @type {Pixel}
+ */
+$default-breaker-height: 10px;
+
+/**
+ *
+ *
+ * Colors
+ * 
+ * 
+ */
+
+$default-ring-background-start:        #ffff66;
+$default-ring-background-stop:         #ffcc00;
+$default-ring-circle-background-start: #7a0099;
+$default-ring-circle-background-mid:   #9432ad;
+$default-ring-circle-background-stop:  #7a0099;
+$default-ring-font-color:              #ffffff;
+$default-ring-breaker-start-color:     #ffff66;
+$default-ring-breaker-end-color:       #ffcc00;

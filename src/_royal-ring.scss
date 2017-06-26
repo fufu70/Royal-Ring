@@ -1,54 +1,42 @@
+@import "variables";
+@import "functions";
 @import "breaker";
 @import "background-gradients";
 
 /**
  * 
  * Ring
- * 
- */
-
-$ring-counter-margin: 4px;
-
-/**
- * Generates a pixel size from a given sequence:
  *
- *  Input:  80px 120px 160px 200px 240px ...
- *  Diff:   16px 20px  24px  28px  32px  ...
- *  Output: 56px 92px  128px 164px 200px
- * 
- * @param  $size: 80px The size of the ring.
+ * @author Christian Micklisch <christian.micklisch@successwithsos.com>
  */
-@function get-inner-size($size: 80px) {
-
-    $smallest-size: 80px;
-    $smallest-difference: 16px;
-    $difference: (($size - $smallest-size) / 10) + $smallest-difference;
-
-    @return $size - $difference;
-}
 
 /**
- * Calculates the padding of the breaker.
+ * Applies mixins for the ring, its contents, and its breaker.
  * 
- * @param  $size      The size of the ring.
- * @param  $font-size The current font size of the contents.
+ * @param  $size:                    $default-ring-size                    The overall size of the ring.
+ * @param  $background-start:        $default-ring-background-start        The starting color of the ring.
+ * @param  $background-stop:         $default-ring-background-stop         The ending color of the ring.
+ * @param  $circle-background-start: $default-ring-circle-background-start The background color of the start of the circle.
+ * @param  $circle-background-mid:   $default-ring-circle-background-mid   The middle color of the rings background.
+ * @param  $circle-background-stop:  $default-ring-circle-background-stop  The ending color ot the rings background.
+ * @param  $circle-percentage-stop:  $default-ring-circle-percentage-stop  Where the background gradient of the ring should stop.
+ * @param  $font-size:               $default-ring-font-size               The counter font size.
+ * @param  $font-color:              $default-ring-font-color              The color of the ring content.
+ * @param  $breaker-start-color:     $default-ring-breaker-start-color     The starting color of the breaker's gradient.
+ * @param  $breaker-end-color:       $default-ring-breaker-end-color       The stopping color fo the breaker's gradient.
  */
-@function get-breaker-padding($size, $font-size) {
-    @return ($size / 3) - ($font-size / 1.2);
-}
-
 @mixin royal-ring(
-    $size: 80px, 
-    $background-start: #08feff, 
-    $background-stop: #0070dd, 
-    $circle-background-start: #066584,
-    $circle-background-mid: #0e7193,
-    $circle-background-stop: #056484,
-    $circle-percentage-stop: 100%,
-    $font-size: 24px,
-    $font-color: #fff,
-    $breaker-start-color: #066584,
-    $breaker-end-color: #0e7193
+    $size: $default-ring-size,
+    $background-start: $default-ring-background-start,
+    $background-stop: $default-ring-background-stop,
+    $circle-background-start: $default-ring-circle-background-start,
+    $circle-background-mid: $default-ring-circle-background-mid,
+    $circle-background-stop: $default-ring-circle-background-stop,
+    $circle-percentage-stop: $default-ring-circle-percentage-stop,
+    $font-size: $default-ring-font-size,
+    $font-color: $default-ring-font-color,
+    $breaker-start-color: $default-ring-breaker-start-color,
+    $breaker-end-color: $default-ring-breaker-end-color
 ) {
     
     @include ring(
@@ -76,23 +64,25 @@ $ring-counter-margin: 4px;
 
 
 /**
- * It is assumed that 80px is the smallest size
+ * Gives the royal ring the inner and outer ring, a starting point of where the ring is created and
+ * applies styling to the rings and their background. 
  * 
- * @param  $size:                    80px          [description]
- * @param  $background-start:        #08feff       [description]
- * @param  $background-stop:         #0070dd       [description]
- * @param  $circle-background-start: #066584       [description]
- * @param  $circle-background-mid:   #0e7193       [description]
- * @param  $circle-background-stop:  #056484       [description]
+ * @param  $size:                    $default-ring-size                    The overall size of the ring.
+ * @param  $background-start:        $default-ring-background-start        The starting color of the ring.
+ * @param  $background-stop:         $default-ring-background-stop         The ending color of the ring.
+ * @param  $circle-background-start: $default-ring-circle-background-start The background color of the start of the circle.
+ * @param  $circle-background-mid:   $default-ring-circle-background-mid   The middle color of the rings background.
+ * @param  $circle-background-stop:  $default-ring-circle-background-stop  The ending color ot the rings background.
+ * @param  $circle-percentage-stop:  $default-ring-circle-percentage-stop  Where the background gradient of the ring should stop.
  */
 @mixin ring(
-    $size: 80px, 
-    $background-start: #08feff, 
-    $background-stop: #0070dd, 
-    $circle-background-start: #066584,
-    $circle-background-mid: #0e7193,
-    $circle-background-stop: #056484,
-    $circle-percentage-stop: 100%
+    $size: $default-ring-size,
+    $background-start: $default-ring-background-start,
+    $background-stop: $default-ring-background-stop,
+    $circle-background-start: $default-ring-circle-background-start,
+    $circle-background-mid: $default-ring-circle-background-mid,
+    $circle-background-stop: $default-ring-circle-background-stop,
+    $circle-percentage-stop: $default-ring-circle-percentage-stop
 ) {
 
     &__ring-start {
@@ -103,12 +93,12 @@ $ring-counter-margin: 4px;
     }
 
     &__ring-start-inner {
-        margin: $ring-counter-margin;
+        margin: $ring-margin;
         position: relative;
     }
 
     &__counter {
-        margin: $ring-counter-margin;
+        margin: $ring-margin;
         position: relative;
 
         &__inner-ring,
@@ -132,23 +122,24 @@ $ring-counter-margin: 4px;
 
 /**
  * The sizing of the ring.
+ *
+ * Sets the size of the ring from the given size of the current ring and the outer
+ * and inner ring percentages.
  * 
- * @param  {[type]} $size [description]
+ * @param  $size: $default-ring-size The overall size of the ring.
  */
 @mixin ring-sizing($size) {
     $inner-size: get-inner-size($size);
-    $outer-ring-size: 90%;
-    $inner-ring-size: 96%;
 
     &__ring-start-inner {
-        height: $inner-size - ($ring-counter-margin * 2);
-        width: $inner-size - ($ring-counter-margin * 2);
+        height: $inner-size - ($ring-margin * 2);
+        width: $inner-size - ($ring-margin * 2);
     }
 
     &__counter {
 
-        height: $size - ($ring-counter-margin * 2);
-        width: $size - ($ring-counter-margin * 2);
+        height: $size - ($ring-margin * 2);
+        width: $size - ($ring-margin * 2);
 
         &__outer-ring {
             height: $outer-ring-size;
@@ -167,17 +158,17 @@ $ring-counter-margin: 4px;
 }
 
 /**
- * [contents description]
- * @param  $size:       80px The current size of the ring.
- * @param  $font-size:  24px          [description]
- * @param  $font-color: #fff          [description]
+ * Gives sizing and structure to the counter, breaker, and description of the rings content.
+ * 
+ * @param  $size:       $default-ring-size       The overall size of the ring.
+ * @param  $font-size:  $default-ring-font-size  The counter font size.
+ * @param  $font-color: $default-ring-font-color The color of the ring content.
  */
 @mixin ring-contents(
-    $size: 80px, 
-    $font-size: 24px,
-    $font-color: #fff
+    $size: $default-ring-size,
+    $font-size: $default-ring-font-size,
+    $font-color: $default-ring-font-color
 ) {
-
     $padding-top: get-breaker-padding($size, $font-size);
     $breaker-padding-bottom: unset;
     $breaker-padding-top: 3px;
@@ -209,10 +200,15 @@ $ring-counter-margin: 4px;
 /**
  * Adds the breaker into the ring-contents.
  * 
- * @param  $start-color [description]
- * @param  $end-color   [description]
+ * @param  $start-color: $default-ring-breaker-start-color         The starting color of the breaker.
+ * @param  $end-color:   $default-ring-breaker-end-color           The ending color of the breaker, before becoming transparent.
+ * @param  $width:       get-inner-size($default-ring-size) - 40px The total width of the breaker.
  */
-@mixin ring-breaker($start-color, $end-color, $width) {
+@mixin ring-breaker(
+    $start-color: $default-ring-breaker-start-color,
+    $end-color: $default-ring-breaker-end-color,
+    $width: get-inner-size($default-ring-size) - 40px
+) {
     &__ring-contents {
         @include breaker($start-color, $end-color, $width);
     }   
